@@ -21,9 +21,39 @@ VaultServer.py includes the following APIs:
 4.  http://ip-address:8443/get-token/<uuid>   GET method
 
 
-In VaultServer.py please replace vault_certificate_thumbprint = "" with your own Server side certificate thumbprint value. 
+# VaultServer.py 
+
+please replace 
+```
+vault_certificate_thumbprint = "" 
+```
+with your own Server side certificate thumbprint value. 
+
+
+
+Change the service is listening on IP or localhost and specific port.
+```
+app.run(host='0.0.0.0', port=8443)
+```
 
 Notice: I installed server side certificate in "LocalMachine", if you install the server side certificate in "currentuser", you need replace the path with "CurrentUser"
-
+```
+$cert = Get-ChildItem cert:\\LocalMachine\\My | Where-Object {{ $_.Thumbprint -like "{VAULT_CERTIFICATE_THUMBPRINT}" }} | Select-Object -First 1
+```
+------------------------------------------------------------------------
 
 VaultClient.ps1 is an powershell example that display how to use these APIs, and you also can build a python version or use other languages which you are familiar with.
+
+# VaultClient.ps1
+
+please replace the following variables with your own value.
+```
+$API_URL = "http://yourhostname_or_IPAddress:8443"
+$Client_Certificate_Thumbprint = ""
+$uuid = ""
+```
+Notice: I installed client side certificate in "CurrentUser", if you install the client side certificate in "LocalMachine", you need replace the path with "LocalMachine"
+```
+$cert = Get-ChildItem cert:\CurrentUser\My | Where-Object { $_.SerialNumber -like ($RESPONSE | ConvertFrom-Json | ConvertFrom-Json)[0].'Serial Number' } | Select-Object -First 1
+```
+
