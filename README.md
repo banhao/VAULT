@@ -20,4 +20,10 @@ VaultServer.py includes the following APIs:
 
 4.  http://ip-address:8443/get-token/<uuid>   GET method
 
+
+In VaultServer.py please replace vault_certificate_thumbprint = "" with your own Server side certificate thumbprint value. 
+
+Notice: I installed server side certificate in "LocalMachine", if you install the server side certificate in "currentuser", you need replace the path with "CurrentUser"
+
+
 VaultClient.ps1 is an powershell example that display how to use these APIs, and you also can build a python version or use other languages which you are familiar with.
